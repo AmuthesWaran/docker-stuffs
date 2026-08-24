@@ -1,0 +1,63 @@
+kubectl --help
+
+kubectl apply -f <manifest.yml>
+kubectl apply -f 01_first_manifest.yml
+kubectl delete -f 01_first_manifest.yml
+
+# Scaling up or down
+
+
+kubectl get pods
+kubectl get services
+
+kubectl apply -f 01_first_manifest.yml --replicas 5
+kubectl scale deployment nginx-deployment --replicas 10
+kubectl scale deployment nginx-deployment --replicas 3
+
+
+
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: datacamp-statefulset
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: datacamp-statefulset
+  template:
+    metadata:
+      labels:
+        app: datacamp-statefulset
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: alpine
+        image: alpine:3.19.1
+        command: 
+        - sleep
+        - "3600"
+
+kubectl scale statefulset datacamp-statefulset --replicas 10
+kubectl scale statefulset datacamp-statefulset --replicas 5
+
+# Storage
+list all available storage claims
+kubectl get sc
+list all available deployed presistent volume claimes
+kubectl get pvc
+list all available deployed presistent volumes
+kubectl get pv
+
+kubectl get pods -n datacamp
+
+kubectl scale statefulset -n datacamp datacamp-statefulset --replicas 10
+
+kubectl scale datacamp-deployment --replicas 5
+
+kubectl describe service datacamp-service
+
+kubectl logs outlier-detection-1
+
+kubectl logs outlier-detection-2
